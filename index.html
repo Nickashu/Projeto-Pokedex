@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="index.css">
+    <link rel="shortcut icon" href="imgs/icon-pokeball.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+</head>
+<body>
+    <div class="body-pokedex">
+        <!--<div class="menu">
+            <button class="btn-cor"><img src="imgs/moon.svg" alt="Imagem-Lua" class="img-sol-lua"></button>
+            <ul class="ul-menu">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Login/Cadastro</a></li>
+                <li><a href="#">Calculadora</a></li>
+            </ul>
+        </div>-->
+        <div class="div-pokedex">
+            <div class="lista-pokemon">
+                <h1 class="texto-tela-clara titulo-lista-pokemon">Pokedéx</h1>
+                <div class="filtro-lista-pokemon">
+                    <button class="btn-cor"><img src="imgs/moon.svg" alt="Imagem-Lua" class="img-sol-lua"></button>
+                    <select name="filtro-pokemon" class="select-filtro">
+                        <option value="">AAAAA</option>
+                        <option value="">AAAAA</option>
+                        <option value="">AAAAA</option>
+                        <option value="">AAAAA</option>
+                    </select>
+                </div>
+                <div class="card-pokemon card-tela-clara texto-tela-clara" id="card-pokemon-principal" style="display: none;">
+                    <h2 class="texto-tela-clara nome-pokemon"></h2>
+                    <div>
+                        <img class="img-pokemon">
+                    </div>
+                    <div class="detalhes-pokemon">
+                        <div class="div-descricao">
+                            <h3>Descrição</h3>
+                            <div><p class="conteudo-descricao"></p></div>
+                        </div>
+                        <div class="div-tipo">
+                            <div class="conteudo-tipo"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="jquery.js"></script>
+<script src="index.js"></script>
+</html>
