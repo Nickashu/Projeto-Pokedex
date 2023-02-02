@@ -203,7 +203,7 @@ function htmlTipos(tipo){
 function descricaoValida(desc){
     let modelo = /[]/;
     if(modelo.test(desc) == false){   //Se a descrição não tiver nenhuma caractere inválido
-        
+        return true;
     }
     return false;
 }
