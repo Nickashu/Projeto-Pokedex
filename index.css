@@ -39,14 +39,16 @@ body{
     }
 .nome-pokemon{
     margin: 0;
+    margin-bottom: 1em;
 }
 .img-pokemon{
     width: 10em;
     margin-bottom: 5%;
-    transition: 1000ms;
+    transition: 500ms;
 }
     .img-pokemon:hover{
-        transform: scale(1.2);
+        transform: scale(1.3);
+        cursor: pointer;
     }
 .detalhes-pokemon{
     display: flex;
@@ -79,23 +81,6 @@ body{
     width: 3em;
     height: 3em;
 }
-/*
-.menu{
-    background-color: #ededed;;
-    grid-column: 1;
-}
-.btn-cor{
-    width: 3em;
-    height: 3em;
-}
-.ul-menu{
-    list-style: none;
-    padding: 0;
-}
-.ul-menu li{
-    padding-top: 1em;
-}
-*/
 
 .texto-tela-escura{
     color: white;
@@ -105,7 +90,7 @@ body{
 }
 
 
-/*Definindi um estilo para a barra de rolagem da descrição*/
+/*Definindo um estilo para a barra de rolagem da descrição*/
 .div-descricao::-webkit-scrollbar {
     width: 7px;
     border-radius: 10px;
