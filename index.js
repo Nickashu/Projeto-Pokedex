@@ -17,16 +17,19 @@ $(document).on("click", ".img-pokemon", function(){
     console.log("aaaa");
 })
 
-window.onload = carregar_pokedex();
+window.onload = function(){
+    carregar_pokedex();
+}
 
 
 async function carregar_pokedex(){
     let url = "";
     let card_original = $("#card-pokemon-principal");
-    let div_lista = $(".lista-pokemon");
+    let div_lista = $("#lista-pokemon");
 
-    for(let num=1; num<700; num++){
+    for(let num=1; num<810; num++){
         url = "https://pokeapi.co/api/v2/pokemon/" + num;
+        showLoader(true);  //Fazendo a tela de carregamento aparecer
         let chamadaPrincipal = await fetch(url)    //Fazendo as chamadas de forma síncrona
         .then(response => {
             if (!response.ok)
@@ -39,13 +42,17 @@ async function carregar_pokedex(){
             $(card_copia).removeAttr("id");
             $(card_copia).find(".nome-pokemon").text(data.id + " - " + capitalize(data.name));   //Adicionando o nome do pokémon
             $(card_copia).find(".img-pokemon").attr("src", data.sprites.front_default).attr("alt", "Imagem-" + capitalize(data.name)).attr("img2", data.sprites.back_default);  //Adicionando a imagem
-            //$(card_copia).find(".conteudo-numero").text(data.id);
             //Adicionando os nomes dos tipos:
-            let tipos = "";
+            let tiposHTML = "";
+            let tiposTxt = "";
             $(data.types).each(function(index, element){
-                tipos += htmlTipos(capitalize(element.type.name)); 
+                tiposTxt += element.type.name + " ";
+                tiposHTML += htmlTipos(capitalize(element.type.name)); 
             });
-            $(card_copia).find(".detalhes-pokemon .conteudo-tipo").html(tipos);
+            $(card_copia).find(".detalhes-pokemon .conteudo-tipo").html(tiposHTML);
+            //Adicionando os atributos necessário para os filtros:
+            let geracao = getGeracaoId(num);
+            $(card_copia).attr("nome", data.name).attr("num", data.id).attr("tipos", tiposTxt.trim()).attr("gen", geracao);
             $(card_copia).show();
             $(div_lista).append(card_copia);
             //Pegando a entrada da pokedex:
@@ -76,6 +83,8 @@ async function carregar_pokedex(){
             console.error('Ocorreu um erro:', error);
         });
     }
+    $("#lista-pokemon").show();
+    showLoader(false);  //Fazendo a tela de carregamento desaparecer
 }
 
 function tela_escura(){

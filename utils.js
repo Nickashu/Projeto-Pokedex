@@ -105,3 +105,30 @@ function descricaoValida(desc){
     }
     return false;
 }
+
+function showLoader(ativo){
+    if(ativo)
+        $("#loader").show();
+    else
+        $("#loader").hide();
+}
+
+function getGeracaoId(num){
+    let gen = 0;
+    if(num >=0 && num <= 151)
+        gen = 1;
+    else if(num >= 152 && num <= 251)
+        gen = 2;
+    else if(num >= 252 && num <= 386)
+        gen = 3;
+    else if(num >= 387 && num <= 494)
+        gen = 4;
+    else if(num >= 495 && num <= 649)
+        gen = 5;
+    else if(num >= 650 && num <= 721)
+        gen = 6;
+    else if(num >= 722 && num <= 810)
+        gen = 7;
+
+    return gen;
+}
