@@ -14,20 +14,26 @@ $(document).on("click", ".img-pokemon", function(){
     let img_aux = $(this).attr("src");
     $(this).attr("src", $(this).attr("img2"));
     $(this).attr("img2", img_aux);
-    console.log("aaaa");
 })
+
+$(document).on("change", ".filtro-geracao input, .filtro-tipos input", function(){    //Evento do filtro
+    filtrarCards($(this).closest("div"));
+});
+$(document).on("keyup", "#input-pokemon", function(){    //Evento do filtro
+    filtrarCards($(this).closest("div"));
+});
+
 
 window.onload = function(){
     carregar_pokedex();
 }
-
 
 async function carregar_pokedex(){
     let url = "";
     let card_original = $("#card-pokemon-principal");
     let div_lista = $("#lista-pokemon");
 
-    for(let num=1; num<810; num++){
+    for(let num=1; num<numLimiteGeracao7; num++){
         url = "https://pokeapi.co/api/v2/pokemon/" + num;
         showLoader(true);  //Fazendo a tela de carregamento aparecer
         let chamadaPrincipal = await fetch(url)    //Fazendo as chamadas de forma síncrona
@@ -37,7 +43,7 @@ async function carregar_pokedex(){
             return response.json();
         })
         .then(data => {
-            console.log(data);
+            //console.log(data);
             let card_copia = $(card_original).clone();
             $(card_copia).removeAttr("id");
             $(card_copia).find(".nome-pokemon").text(data.id + " - " + capitalize(data.name));   //Adicionando o nome do pokémon
@@ -84,6 +90,8 @@ async function carregar_pokedex(){
         });
     }
     $("#lista-pokemon").show();
+    filtrarCards($(".filtro-geracao"));
+    filtrarCards($(".filtro-tipos"));
     showLoader(false);  //Fazendo a tela de carregamento desaparecer
 }
 
@@ -119,4 +127,57 @@ function tela_clara(){
         }
         $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/moon.svg").attr("alt", "Imagem-Lua");
     }, 500);
+}
+
+
+function filtrarCards(divFiltro){
+    let div_filtro = $(".filtro-lista-pokemon");
+    if($(divFiltro).hasClass("filtro-geracao")){
+        let listaGeracoes = [];
+        $(div_filtro).find(".filtro-geracao").find("input").each(function(index, element){
+            if($(element).prop("checked"))
+                listaGeracoes.push($(element).attr("value"));
+        });
+        $(".card-pokemon").each(function(index, element){
+            if(!listaGeracoes.includes($(element).attr("gen")))
+                $(element).removeClass("filtro-gen").fadeOut(300);
+            else
+                $(element).addClass("filtro-gen").fadeIn(300);
+        });
+    }
+    else if($(divFiltro).hasClass("filtro-tipos")){
+        let listaTiposDesmarcados = [];
+        $(div_filtro).find(".filtro-tipos").find("input").each(function(index, element){
+            if(!$(element).prop("checked"))
+            listaTiposDesmarcados.push($(element).attr("value"));
+        });
+
+        $(".card-pokemon.filtro-gen").each(function(index, element){
+            if($(element).attr("tipos")){   //Se o card possuir o atributo "tipos"
+                let tipos = $(element).attr("tipos").split(" ");
+                let temTipoDesmarcado = false;
+                for(let i=0; i<tipos.length; i++){
+                    if(listaTiposDesmarcados.includes(tipos[i])){
+                        temTipoDesmarcado = true;
+                        break;
+                    }
+                }
+                if(temTipoDesmarcado)
+                    $(element).removeClass("filtro-tipo").fadeOut(300);
+                else
+                    $(element).addClass("filtro-tipo").fadeIn(300);
+            }
+        });
+    }
+    else if($(divFiltro).hasClass("div-filtro-nome-numero")){
+        $(".card-pokemon.filtro-gen.filtro-tipo").each(function(index, element){
+            if($(element).attr("nome")){   //Se o card possuir o atributo "nome"
+                let textoInput = $("#input-pokemon").val().toLowerCase().trim();
+                if($(element).attr("nome").includes(textoInput))
+                    $(element).show();
+                else
+                    $(element).hide();
+            }
+        });
+    }
 }

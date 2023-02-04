@@ -132,3 +132,6 @@ function getGeracaoId(num){
 
     return gen;
 }
+
+
+const numLimiteGeracao7 = 810;
