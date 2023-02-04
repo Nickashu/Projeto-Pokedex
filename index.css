@@ -90,6 +90,53 @@ body{
 }
 
 
+.div-filtros{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.div-filtros-checkbox{
+    display: flex;
+    flex-direction: column;
+    row-gap: 1em;
+    align-items: center;
+    padding: 20px;
+    border: 2px solid #818181;
+    box-shadow: 3px 3px 7px #bbb8b8;
+    border-radius: 10px;
+}
+.fieldset-filtro-geracao{
+    display: flex;
+    gap: 1em;
+}
+.fieldset-filtro-tipos{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    column-gap: 1em;
+    text-align: initial;
+}
+.fieldset-filtro-geracao, .fieldset-filtro-tipos{
+    border-radius: 20px;
+    border: 2px solid #818181;
+    box-shadow: 0px 4px 5px #bbb8b8;
+}
+#input-pokemon{
+    box-shadow: 2px 2px 5px #c1b6b6;
+    width: 16em;
+    height: 1.5em;
+    border-radius: 10px;
+    font-family: Arial, sans-serif;
+    font-size: 15pt;
+    font-weight: bold;
+    border: none;
+}
+    #input-pokemon:focus{
+        outline: none;
+    }
+
+
+
+
 /*Definindo um estilo para a barra de rolagem da descrição*/
 .div-descricao::-webkit-scrollbar {
     width: 7px;

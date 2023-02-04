@@ -17,47 +17,51 @@
             <h1 class="texto-tela-clara titulo-lista-pokemon">Pokedéx</h1>
             <div class="filtro-lista-pokemon">
                 <button class="btn-cor" style="display: none;"><img src="imgs/moon.svg" alt="Imagem-Lua" class="img-sol-lua"></button>
-                <div class="filtro-geracao">
-                    <form>  
-                        <fieldset>  
-                            <legend>Filtre por geração</legend>  
-                            <input type="checkbox" name="checkbox-geracao" value="1" checked="checked">Geração 1
-                            <input type="checkbox" name="checkbox-geracao" value="2">Geração 2
-                            <input type="checkbox" name="checkbox-geracao" value="3">Geração 3
-                            <input type="checkbox" name="checkbox-geracao" value="4">Geração 4
-                            <input type="checkbox" name="checkbox-geracao" value="5">Geração 5
-                            <input type="checkbox" name="checkbox-geracao" value="6">Geração 6
-                            <input type="checkbox" name="checkbox-geracao" value="7">Geração 7
-                        </fieldset>  
-                    </form>
-                </div>
-                <div class="filtro-tipos">
-                    <form>  
-                        <fieldset>  
-                            <legend>Filtre por tipos</legend>
-                            <input type="checkbox" name="checkbox-tipo" value="normal" checked="checked">Normal
-                            <input type="checkbox" name="checkbox-tipo" value="grass" checked="checked">Grass
-                            <input type="checkbox" name="checkbox-tipo" value="water" checked="checked">Water
-                            <input type="checkbox" name="checkbox-tipo" value="fire" checked="checked">Fire
-                            <input type="checkbox" name="checkbox-tipo" value="ground" checked="checked">Ground
-                            <input type="checkbox" name="checkbox-tipo" value="rock" checked="checked">Rock
-                            <input type="checkbox" name="checkbox-tipo" value="electric" checked="checked">Electric
-                            <input type="checkbox" name="checkbox-tipo" value="bug" checked="checked">Bug
-                            <input type="checkbox" name="checkbox-tipo" value="steel" checked="checked">Steel
-                            <input type="checkbox" name="checkbox-tipo" value="flying" checked="checked">Flying
-                            <input type="checkbox" name="checkbox-tipo" value="ghost" checked="checked">Ghost
-                            <input type="checkbox" name="checkbox-tipo" value="psychic" checked="checked">Psychic
-                            <input type="checkbox" name="checkbox-tipo" value="fairy" checked="checked">Fairy
-                            <input type="checkbox" name="checkbox-tipo" value="dark" checked="checked">Dark
-                            <input type="checkbox" name="checkbox-tipo" value="fighting" checked="checked">Fighting
-                            <input type="checkbox" name="checkbox-tipo" value="poison" checked="checked">Poison
-                            <input type="checkbox" name="checkbox-tipo" value="ice" checked="checked">Ice
-                            <input type="checkbox" name="checkbox-tipo" value="dragon" checked="checked">Dragon
-                        </fieldset>  
-                    </form>
-                </div>
-                <div class="filtro-nome-numero">
-                    <input type="text" name="input-pokemon" id="input-pokemon" placeholder="Pesquise por nome ou número">
+                <div class="div-filtros">
+                    <div class="div-filtros-checkbox">
+                        <div class="filtro-geracao">
+                            <form>  
+                                <fieldset class="fieldset-filtro-geracao">  
+                                    <legend style="font-weight: bold;">Filtre por geração</legend>  
+                                    <label><input type="checkbox" name="checkbox-geracao" value="1" checked="checked">Geração 1</label>
+                                    <label><input type="checkbox" name="checkbox-geracao" value="2">Geração 2</label>
+                                    <label><input type="checkbox" name="checkbox-geracao" value="3">Geração 3</label>
+                                    <label><input type="checkbox" name="checkbox-geracao" value="4">Geração 4</label>
+                                    <label><input type="checkbox" name="checkbox-geracao" value="5">Geração 5</label>
+                                    <label><input type="checkbox" name="checkbox-geracao" value="6">Geração 6</label>
+                                    <label><input type="checkbox" name="checkbox-geracao" value="7">Geração 7</label>
+                                </fieldset>  
+                            </form>
+                        </div>
+                        <div class="filtro-tipos">
+                            <form>  
+                                <fieldset class="fieldset-filtro-tipos">  
+                                    <legend style="font-weight: bold;">Filtre por tipos</legend>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="normal" checked="checked">Normal</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="grass" checked="checked">Grass</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="water" checked="checked">Water</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="fire" checked="checked">Fire</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="ground" checked="checked">Ground</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="rock" checked="checked">Rock</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="electric" checked="checked">Electric</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="bug" checked="checked">Bug</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="steel" checked="checked">Steel</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="flying" checked="checked">Flying</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="ghost" checked="checked">Ghost</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="psychic" checked="checked">Psychic</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="fairy" checked="checked">Fairy</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="dark" checked="checked">Dark</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="fighting" checked="checked">Fighting</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="poison" checked="checked">Poison</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="ice" checked="checked">Ice</label>
+                                    <label><input type="checkbox" name="checkbox-tipo" value="dragon" checked="checked">Dragon</label>
+                                </fieldset>  
+                            </form>
+                        </div>
+                    </div>
+                    <div class="filtro-nome-numero">
+                        <input type="text" name="input-pokemon" id="input-pokemon" placeholder="Pesquise por nome ou número">
+                    </div>
                 </div>
             </div>
             <div id="lista-pokemon" style="display: none;">

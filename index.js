@@ -17,10 +17,10 @@ $(document).on("click", ".img-pokemon", function(){
 })
 
 $(document).on("change", ".filtro-geracao input, .filtro-tipos input", function(){    //Evento do filtro
-    filtrarCards($(this).closest("div"), false);
+    filtrarCards($(this).closest("div"));
 });
 $(document).on("keyup", "#input-pokemon", function(){    //Evento do filtro
-    filtrarCards($(this).closest("div"), false);
+    filtrarCards($(this).closest("div"));
 });
 
 
@@ -90,9 +90,9 @@ async function carregar_pokedex(){
         });
     }
     $("#lista-pokemon").show();
-    filtrarCards($(".filtro-geracao"), true);
-    filtrarCards($(".filtro-tipos"), true);
-    filtrarCards($(".filtro-nome-numero"), true);
+    filtrarCards($(".filtro-geracao"));
+    filtrarCards($(".filtro-tipos"));
+    filtrarCards($(".filtro-nome-numero"));
     showLoader(false);  //Fazendo a tela de carregamento desaparecer
 }
 
@@ -131,9 +131,8 @@ function tela_clara(){
 }
 
 
-function filtrarCards(divFiltro, primeiraChamada){
+function filtrarCards(divFiltro){
     const div_filtro = $(".filtro-lista-pokemon");
-    let seletorCards;
     if($(divFiltro).hasClass("filtro-geracao")){
         let listaGeracoes = [];
         $(div_filtro).find(".filtro-geracao").find("input").each(function(index, element){
@@ -141,7 +140,6 @@ function filtrarCards(divFiltro, primeiraChamada){
                 listaGeracoes.push($(element).attr("value"));
         });
 
-        //seletorCards = primeiraChamada ? ".card-pokemon" : ".card-pokemon";   //Definindo quais cards serão percorridos
         $(".card-pokemon").each(function(index, element){
             if(listaGeracoes.includes($(element).attr("gen"))){
                 $(element).addClass("filtro-gen");
@@ -161,7 +159,6 @@ function filtrarCards(divFiltro, primeiraChamada){
             listaTiposDesmarcados.push($(element).attr("value"));
         });
 
-        //seletorCards = primeiraChamada ? ".card-pokemon.filtro-gen" : ".card-pokemon.filtro-gen.filtro-nome-numero";   //Definindo quais cards serão percorridos
         $(".card-pokemon").each(function(index, element){
             if($(element).attr("tipos")){   //Se o card possuir o atributo "tipos"
                 let tipos = $(element).attr("tipos").split(" ");
@@ -186,10 +183,9 @@ function filtrarCards(divFiltro, primeiraChamada){
     else if($(divFiltro).hasClass("filtro-nome-numero")){
         let textoInput = $("#input-pokemon").val().toLowerCase().trim();
 
-        //seletorCards = primeiraChamada ? ".card-pokemon.filtro-gen.filtro-tipo" : ".card-pokemon.filtro-gen.filtro-tipo";   //Definindo quais cards serão percorridos
         $(".card-pokemon").each(function(index, element){
-            if($(element).attr("nome")){   //Se o card possuir o atributo "nome"
-                if($(element).attr("nome").includes(textoInput)){
+            if($(element).attr("nome") || $(element).attr("num")){   //Se o card possuir o atributo "nome" ou o atributo "num"
+                if($(element).attr("nome").includes(textoInput) || $(element).attr("num").includes(textoInput)){
                     $(element).addClass("filtro-nome-numero");
                     if($(element).hasClass("filtro-tipo") && $(element).hasClass("filtro-gen"))
                         $(element).show();
