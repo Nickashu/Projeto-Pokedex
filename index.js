@@ -17,10 +17,10 @@ $(document).on("click", ".img-pokemon", function(){
 })
 
 $(document).on("change", ".filtro-geracao input, .filtro-tipos input", function(){    //Evento do filtro
-    filtrarCards($(this).closest("div"));
+    filtrarCards($(this).closest("div"), false);
 });
 $(document).on("keyup", "#input-pokemon", function(){    //Evento do filtro
-    filtrarCards($(this).closest("div"));
+    filtrarCards($(this).closest("div"), false);
 });
 
 
@@ -89,10 +89,10 @@ async function carregar_pokedex(){
             console.error('Ocorreu um erro:', error);
         });
     }
+    filtrarCards($(".filtro-geracao"), true);
+    filtrarCards($(".filtro-tipos"), true);
+    filtrarCards($(".filtro-nome-numero"), true);
     $("#lista-pokemon").show();
-    filtrarCards($(".filtro-geracao"));
-    filtrarCards($(".filtro-tipos"));
-    filtrarCards($(".filtro-nome-numero"));
     showLoader(false);  //Fazendo a tela de carregamento desaparecer
 }
 
@@ -131,7 +131,8 @@ function tela_clara(){
 }
 
 
-function filtrarCards(divFiltro){
+function filtrarCards(divFiltro, primeiraChamada){
+    $(".msg-sem-registros").hide();
     const div_filtro = $(".filtro-lista-pokemon");
     if($(divFiltro).hasClass("filtro-geracao")){
         let listaGeracoes = [];
@@ -195,5 +196,27 @@ function filtrarCards(divFiltro){
                 }
             }
         });
+
+        if(primeiraChamada)
+            atualizarRegistros(primeiraChamada);
     }
+
+    if(!primeiraChamada)
+        atualizarRegistros(primeiraChamada);
+}
+
+
+function atualizarRegistros(primeiraChamada){
+    setTimeout(function(){
+        if($(".card-pokemon:visible").length > 0){   //Se tiver algum registro
+            if(!primeiraChamada)
+                $(".div-registros .registros").fadeOut(200).fadeIn(200);
+            $(".div-registros .registros").text($(".card-pokemon:visible").length);
+            $(".div-registros").show();
+        }
+        else{
+            $(".div-registros").hide();
+            $(".msg-sem-registros").show();
+        }
+    }, 500);
 }

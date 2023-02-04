@@ -25,14 +25,34 @@ body{
     .filtro-lista-pokemon{
         grid-column: 1/5;
     }
+.div-registros{
+    display: flex;
+    flex-direction: column;
+    text-align: initial;
+    font-size: 15pt;
+    margin-left: 1em;
+    margin-top: 3em;
+}
+.registros{
+    font-weight: bold;
+    font-size: 25pt;
+    color: #4e5860;
+    margin: 0;
+}
+.msg-sem-registros{
+    font-size: 25pt;
+    font-weight: bold;
+    margin-top: 4em;
+}
+
 .card-pokemon{
-    width: 18em;
+    width: 17em;
     padding: 2em;
     border-radius: 20px;
     box-shadow: 2px 5px 6px grey;
 }
     .card-tela-clara{
-        background-color: #cdf7e2;
+        background-color: #eef9f6;
     }
     .card-tela-escura{
         background-color: #819189;
@@ -53,14 +73,19 @@ body{
 .detalhes-pokemon{
     display: flex;
     justify-content: space-between;
-    height: 5em;
+    height: 7em;
 }
     .detalhes-pokemon h3{
         font-size: 11pt;
         margin-top: 0;
     }
-.div-descricao{
+.div-principal-descricao{
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.div-descricao{
     overflow: auto;
 }
 .div-tipo{
@@ -72,6 +97,9 @@ body{
     row-gap: 1em;
     overflow: auto;
     font-weight: bold;
+}
+.conteudo-descricao{
+    margin: 0;
 }
 .nome-tipo{
     padding: 5px;
@@ -88,7 +116,6 @@ body{
 .texto-tela-clara{
     color: black;
 }
-
 
 .div-filtros{
     display: flex;
@@ -135,8 +162,6 @@ body{
     }
 
 
-
-
 /*Definindo um estilo para a barra de rolagem da descrição*/
 .div-descricao::-webkit-scrollbar {
     width: 7px;
@@ -148,7 +173,6 @@ body{
     border-radius: 10px;
     background-color: #4b4949;
 }
-
 
 /*Tela de loading*/
 #loader {
@@ -176,4 +200,29 @@ body{
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+
+/*Responsividade*/
+@media screen and (max-width: 1460px) {
+    #lista-pokemon{
+        grid-template-columns: auto auto auto;
+    }
+}
+@media screen and (max-width: 1110px) {
+    #lista-pokemon{
+        grid-template-columns: auto auto;
+    }
+}
+@media screen and (max-width: 770px) {
+    #lista-pokemon{
+        grid-template-columns: auto;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .div-filtros{
+        flex-direction: column;
+        row-gap: 1.5em;
+    }
 }

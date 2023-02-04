@@ -69,7 +69,7 @@ function htmlTipos(tipo){
             cor_tipo = "#f1fd8a";
             break;
         case "normal":
-            cor_tipo = "#f7f7f9";
+            cor_tipo = "#e4e4ef";
             break;
         case "ice":
             cor_tipo = "#a5e9fd";
