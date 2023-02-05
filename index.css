@@ -53,11 +53,13 @@ body{
 }
 
 .card-pokemon{
-    width: 17em;
-    padding: 2em;
+    width: 19em;
     border-radius: 20px;
     box-shadow: 2px 5px 6px grey;
     background-color: var(--card);
+}
+.conteudo-card{
+    padding: 2em;
 }
 .nome-pokemon{
     margin: 0;
@@ -81,6 +83,13 @@ body{
         font-size: 11pt;
         margin-top: 0;
     }
+
+.div-numero{
+    position: absolute;
+    color: #818181;
+    font-weight: bold;
+    padding: 0.6em;;
+}
 .div-principal-descricao{
     width: 55%;
     display: flex;
@@ -270,7 +279,7 @@ body{
         height: 1.2em;
     }
     .card-pokemon{
-        width: 13em;
+        width: 17em;
     }
 }
 @media screen and (max-width: 350px) {

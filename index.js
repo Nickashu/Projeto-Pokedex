@@ -46,7 +46,8 @@ async function carregar_pokedex(){
             //console.log(data);
             let card_copia = $(card_original).clone();
             $(card_copia).removeAttr("id");
-            $(card_copia).find(".nome-pokemon").text(data.id + " - " + capitalize(data.name));   //Adicionando o nome do pokémon
+            $(card_copia).find(".div-numero").text("N°" + data.id);
+            $(card_copia).find(".nome-pokemon").text(capitalize(data.name));   //Adicionando o nome do pokémon
             $(card_copia).find(".img-pokemon").attr("src", data.sprites.front_default).attr("alt", "Imagem-" + capitalize(data.name)).attr("img2", data.sprites.back_default);  //Adicionando a imagem
             //Adicionando os nomes dos tipos:
             let tiposHTML = "";
