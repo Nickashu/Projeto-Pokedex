@@ -261,6 +261,9 @@ body{
     #input-pokemon{
         font-size: 13pt;
     }
+    .div-icon-lupa img{
+        height: 1.2em;
+    }
     .card-pokemon{
         width: 13em;
     }
@@ -268,6 +271,9 @@ body{
 @media screen and (max-width: 350px) {
     #input-pokemon{
         font-size: 10pt;
+    }
+    .div-icon-lupa img{
+        height: 0.9em;
     }
 }
 
