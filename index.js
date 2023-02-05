@@ -14,7 +14,7 @@ $(document).on("click", ".img-pokemon", function(){
     let img_aux = $(this).attr("src");
     $(this).attr("src", $(this).attr("img2"));
     $(this).attr("img2", img_aux);
-})
+});
 
 $(document).on("change", ".filtro-geracao input, .filtro-tipos input", function(){    //Evento do filtro
     filtrarCards($(this).closest("div"), false);
