@@ -84,7 +84,6 @@ function htmlTipos(tipo){
     return html;
 }
 
-
 function descricaoValida(desc){
     let modelo = /[]/;
     if(modelo.test(desc) == false){   //Se a descrição não tiver nenhuma caractere inválido
@@ -132,6 +131,5 @@ function getGeracaoId(num){
 
     return gen;
 }
-
 
 const numLimiteGeracao7 = 810;
