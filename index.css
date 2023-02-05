@@ -4,6 +4,7 @@
     --card-tela-escura: #D1FFD7;
   }
 
+  
 body{
     background-color: var(--body-tela-clara);
     font-family: sans-serif;
