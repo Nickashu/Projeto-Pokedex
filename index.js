@@ -1,6 +1,5 @@
-let body = window.document.querySelector("body");
+/*
 let flag = true;
-
 let btn_cor = window.document.querySelector(".btn-cor");
 btn_cor.addEventListener("click", function(){
     if(flag)
@@ -9,6 +8,7 @@ btn_cor.addEventListener("click", function(){
         tela_clara();
     flag = !flag;
 });
+*/
 
 $(document).on("click", ".img-pokemon", function(){
     let img_aux = $(this).attr("src");
@@ -96,6 +96,7 @@ async function carregar_pokedex(){
     showLoader(false);  //Fazendo a tela de carregamento desaparecer
 }
 
+/*
 function tela_escura(){
     setTimeout(function(){
         $(body).css("background", "#5f6060");
@@ -129,7 +130,7 @@ function tela_clara(){
         $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/moon.svg").attr("alt", "Imagem-Lua");
     }, 500);
 }
-
+*/
 
 function filtrarCards(divFiltro, primeiraChamada){
     $(".msg-sem-registros").hide();
@@ -183,6 +184,10 @@ function filtrarCards(divFiltro, primeiraChamada){
     }
     else if($(divFiltro).hasClass("filtro-nome-numero")){
         let textoInput = $("#input-pokemon").val().toLowerCase().trim();
+        if($("#input-pokemon").val() === "")
+            $(".div-icon-lupa").show();
+        else
+            $(".div-icon-lupa").hide();
 
         $(".card-pokemon").each(function(index, element){
             if($(element).attr("nome") || $(element).attr("num")){   //Se o card possuir o atributo "nome" ou o atributo "num"
@@ -207,16 +212,14 @@ function filtrarCards(divFiltro, primeiraChamada){
 
 
 function atualizarRegistros(primeiraChamada){
-    setTimeout(function(){
-        if($(".card-pokemon:visible").length > 0){   //Se tiver algum registro
-            if(!primeiraChamada)
-                $(".div-registros .registros").fadeOut(200).fadeIn(200);
-            $(".div-registros .registros").text($(".card-pokemon:visible").length);
-            $(".div-registros").show();
-        }
-        else{
-            $(".div-registros").hide();
-            $(".msg-sem-registros").show();
-        }
-    }, 500);
+    if($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length > 0){   //Se tiver algum registro com todas as classes
+        if(!primeiraChamada)
+            $(".div-registros .registros").fadeOut(200).fadeIn(200);
+        $(".div-registros .registros").text($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length);
+        $(".div-registros").show();
+    }
+    else{
+        $(".div-registros").hide();
+        $(".msg-sem-registros").show();
+    }
 }

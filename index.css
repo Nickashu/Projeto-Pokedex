@@ -1,12 +1,11 @@
 :root {
-    --body-tela-clara: #F2FFF5;
-    --card-tela-clara: #C4FFC6;
-    --card-tela-escura: #D1FFD7;
-  }
+    --body: #F2FFF5;
+    --card: #dffbe0;
+    --filtros: #fcfffb;
+}
 
-  
 body{
-    background-color: var(--body-tela-clara);
+    background-color: var(--body);
     font-family: sans-serif;
     margin: 0;;
 }
@@ -57,13 +56,8 @@ body{
     padding: 2em;
     border-radius: 20px;
     box-shadow: 2px 5px 6px grey;
+    background-color: var(--card);
 }
-    .card-tela-clara{
-        background-color: var(--card-tela-clara);
-    }
-    .card-tela-escura{
-        background-color: #819189;
-    }
 .nome-pokemon{
     margin: 0;
     margin-bottom: 1em;
@@ -74,7 +68,7 @@ body{
     transition: 500ms;
 }
     .img-pokemon:hover{
-        transform: scale(1.3);
+        transform: scale(1.2);
         cursor: pointer;
     }
 .detalhes-pokemon{
@@ -117,13 +111,6 @@ body{
     height: 3em;
 }
 
-.texto-tela-escura{
-    color: white;
-}
-.texto-tela-clara{
-    color: black;
-}
-
 .div-filtros{
     display: flex;
     align-items: center;
@@ -140,7 +127,7 @@ body{
     border: 2px solid #818181;
     box-shadow: 3px 3px 7px #bbb8b8;
     border-radius: 10px;
-    background-color: #fcfffb;
+    background-color: var(--filtros);
 }
 .fieldset-filtro-geracao{
     display: flex;
@@ -158,35 +145,36 @@ body{
     box-shadow: 0px 4px 5px #bbb8b8;
 }
 
+.div-filtros{
+    display: flex;
+}
+
 .div-filtros .filtro-nome-numero{
     display: flex;
-    gap: 10px;
+    gap: 0;
+    position: relative;
 }
 #input-pokemon{
     box-shadow: 2px 2px 5px #c1b6b6;
-    width: 16em;
+    width: 17em;
     height: 1.5em;
     border-radius: 10px;
-    font-family: Arial, sans-serif;
     font-size: 15pt;
     font-weight: bold;
     border: none;
+    background-color: var(--filtros);
 }
     #input-pokemon:focus{
         outline: none;
     }
-.botao-filtros-checkbox{
-    border: none;
-    border-radius: 6px;
-    background-color: #dbd8d8;
-    display: none;
+.div-icon-lupa{
+    position: absolute;
+    margin-left: 92%;
 }
-.botao-filtros-checkbox:hover{
-    cursor: pointer;
-    opacity: 70%;
-}
-    .botao-filtros-checkbox img{
+    .div-icon-lupa img{
         height: 1.5em;
+        margin-top: 4px;
+        opacity: 60%;
     }
 
 /*Definindo um estilo para a barra de rolagem da descrição*/
@@ -204,6 +192,7 @@ body{
 /*Tela de loading*/
 #loader {
     position: fixed;
+    z-index: 1;
     top: 0;
     bottom: 0;
     left: 0;

@@ -14,9 +14,8 @@
     </div>
     <div class="body-pokedex">
         <div class="div-pokedex">
-            <h1 class="texto-tela-clara titulo-lista-pokemon">Pokedex</h1>
+            <h1 class="titulo-lista-pokemon">Pokedex</h1>
             <div class="filtro-lista-pokemon">
-                <button class="btn-cor" style="display: none;"><img src="imgs/moon.svg" alt="Imagem-Lua" class="img-sol-lua"></button>
                 <div class="div-filtros">
                     <div class="div-filtros-checkbox">
                         <div class="filtro-geracao">
@@ -61,14 +60,15 @@
                     </div>
                     <div class="filtro-nome-numero">
                         <input type="text" name="input-pokemon" id="input-pokemon" placeholder="Pesquise por nome ou número">
+                        <div class="div-icon-lupa"><img src="imgs/icon-lupa.png" alt="Ícone Lupa"></div>
                     </div>
                 </div>
             </div>
             <div class="div-registros" style="display: none;">Total de registros<p class="registros" style="font-weight: bold;"></p></div>
             <div class="msg-sem-registros" style="display: none;">Nenhum registro encontrado</div>
             <div id="lista-pokemon" style="display: none;">
-                <div class="card-pokemon card-tela-clara texto-tela-clara" id="card-pokemon-principal" style="display: none;">
-                    <h2 class="texto-tela-clara nome-pokemon"></h2>
+                <div class="card-pokemon" id="card-pokemon-principal" style="display: none;">
+                    <h2 class="nome-pokemon"></h2>
                     <div>
                         <img class="img-pokemon">
                     </div>
