@@ -142,3 +142,16 @@ function getGeracaoId(num){
 
     return gen;
 }
+
+
+function alerta(mensagem){
+    let copiaAlerta = $(".div-msg-alerta").find(".msg-alerta-principal").clone();
+    $(".div-msg-alerta").append(copiaAlerta);
+    $(copiaAlerta).removeClass("msg-alerta-principal").addClass("msg-alerta-copia").text(mensagem).fadeIn(500);
+    setTimeout(function(){
+        $(copiaAlerta).fadeOut(200);
+        setTimeout(function(){
+            $(copiaAlerta).remove();
+        }, 500);
+    }, 3000);
+}

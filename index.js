@@ -21,7 +21,6 @@ $(document).on("scroll", function(){
     }
 });
 $(document).on("click", ".scroll-top", function(){
-    console.log("clicou");
     window.scrollTo({
         top: 0,
         behavior: 'smooth'
@@ -61,7 +60,6 @@ async function carregar_pokedex(){
             return response.json();
         })
         .then(data => {
-            //console.log(data);
             let card_copia = $(card_original).clone();
             $(card_copia).removeAttr("id");
             $(card_copia).find(".div-numero").text("N°" + data.id);
@@ -120,6 +118,7 @@ async function carregar_pokedex(){
     filtrarCards($(".filtro-tipos"), true);
     filtrarCards($(".filtro-nome-numero"), true);
     $(".loading-filtros").remove();
+    alerta("Filtros carregados com sucesso");
     $(".div-filtros").fadeIn(500);
 }
 

@@ -284,6 +284,29 @@ body{
     width: 2.3em;
 }
 
+.div-msg-alerta{
+    margin-right: 2em;
+    margin-top: 2em;
+    right: 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    row-gap: 2em;
+}
+.msg-alerta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9em;
+    width: 17em;
+    height: 7em;
+    border-radius: 15px;
+    box-shadow: 0px 2px 5px #938a8a;
+    background-color: rgb(15 151 26 / 30%);
+}
+
 
 /*Animação de rotação para a tela de loading*/
 @keyframes spin {
