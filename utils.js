@@ -1,3 +1,14 @@
+const limitesGeracoes = {
+    gen1: 151,
+    gen2: 251,
+    gen3: 386,
+    gen4: 494,
+    gen5: 649,
+    gen6: 721,
+    gen7: 810
+};
+
+
 function capitalize(string){
     let string_format="";
 
@@ -114,22 +125,20 @@ function showLoader(ativo){
 
 function getGeracaoId(num){
     let gen = 0;
-    if(num >=0 && num <= 151)
+    if(num >=0 && num <= limitesGeracoes.gen1)
         gen = 1;
-    else if(num >= 152 && num <= 251)
+    else if(num >= limitesGeracoes.gen1+1 && num <= limitesGeracoes.gen2)
         gen = 2;
-    else if(num >= 252 && num <= 386)
+    else if(num >= limitesGeracoes.gen2+1 && num <= limitesGeracoes.gen3)
         gen = 3;
-    else if(num >= 387 && num <= 494)
+    else if(num >= limitesGeracoes.gen3+1 && num <= limitesGeracoes.gen4)
         gen = 4;
-    else if(num >= 495 && num <= 649)
+    else if(num >= limitesGeracoes.gen4+1 && num <= limitesGeracoes.gen5)
         gen = 5;
-    else if(num >= 650 && num <= 721)
+    else if(num >= limitesGeracoes.gen5+1 && num <= limitesGeracoes.gen6)
         gen = 6;
-    else if(num >= 722 && num <= 810)
+    else if(num >= limitesGeracoes.gen6+1 && num <= limitesGeracoes.gen7)
         gen = 7;
 
     return gen;
 }
-
-const numLimiteGeracao7 = 810;

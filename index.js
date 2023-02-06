@@ -10,6 +10,24 @@ btn_cor.addEventListener("click", function(){
 });
 */
 
+//Evento de voltar ao topo da tela:
+$(document).on("scroll", function(){
+    let scrollTop = document.scrollingElement.scrollTop;
+    if(scrollTop > 1000){
+        $(".div-scroll-top").fadeIn(300);
+    }
+    else{
+        $(".div-scroll-top").fadeOut(300);
+    }
+});
+$(document).on("click", ".scroll-top", function(){
+    console.log("clicou");
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+});
+
 $(document).on("click", ".img-pokemon", function(){
     let img_aux = $(this).attr("src");
     $(this).attr("src", $(this).attr("img2"));
@@ -33,9 +51,9 @@ async function carregar_pokedex(){
     let card_original = $("#card-pokemon-principal");
     let div_lista = $("#lista-pokemon");
 
-    for(let num=1; num<numLimiteGeracao7; num++){
+    showLoader(true);  //Fazendo a tela de carregamento aparecer
+    for(let num=1; num<limitesGeracoes.gen7; num++){
         url = "https://pokeapi.co/api/v2/pokemon/" + num;
-        showLoader(true);  //Fazendo a tela de carregamento aparecer
         let chamadaPrincipal = await fetch(url)    //Fazendo as chamadas de forma síncrona
         .then(response => {
             if (!response.ok)
@@ -60,7 +78,6 @@ async function carregar_pokedex(){
             //Adicionando os atributos necessário para os filtros:
             let geracao = getGeracaoId(num);
             $(card_copia).attr("nome", data.name).attr("num", data.id).attr("tipos", tiposTxt.trim()).attr("gen", geracao);
-            $(card_copia).show();
             $(div_lista).append(card_copia);
             //Pegando a entrada da pokedex:
             let url_specie = "https://pokeapi.co/api/v2/pokemon-species/" + num;
@@ -85,53 +102,26 @@ async function carregar_pokedex(){
             .catch(error => {
                 console.error('Ocorreu um erro:', error);
             });
+
+            if(num <= limitesGeracoes.gen1+1)
+                $(card_copia).show();
+            if(num == limitesGeracoes.gen2){
+                $("#lista-pokemon").show();
+                $(".loading-filtros").show();
+                showLoader(false);  //Fazendo a tela de carregamento desaparecer
+            }
         })
         .catch(error => {
             console.error('Ocorreu um erro:', error);
         });
     }
+    //Ao final de todo o carregamento:
     filtrarCards($(".filtro-geracao"), true);
     filtrarCards($(".filtro-tipos"), true);
     filtrarCards($(".filtro-nome-numero"), true);
-    $("#lista-pokemon").show();
-    showLoader(false);  //Fazendo a tela de carregamento desaparecer
+    $(".loading-filtros").remove();
+    $(".div-filtros").fadeIn(500);
 }
-
-/*
-function tela_escura(){
-    setTimeout(function(){
-        $(body).css("background", "#5f6060");
-        let textos = document.querySelectorAll(".texto-tela-clara");
-        for(let i=0; i<textos.length; i++){
-            textos[i].classList.add("texto-tela-escura");
-            textos[i].classList.remove("texto-tela-clara");
-        }
-        let cards = document.querySelectorAll(".card-pokemon");
-        for(let i=0; i<cards.length; i++){
-            cards[i].classList.add("card-tela-escura");
-            cards[i].classList.remove("card-tela-clara");
-        }
-        $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/sun.svg").attr("alt", "Imagem-Sol");
-    }, 500);
-}
-
-function tela_clara(){
-    setTimeout(function(){
-        $(body).css("background", "#f7ffff");
-        let textos = document.querySelectorAll(".texto-tela-escura");
-        for(let i=0; i<textos.length; i++){
-            textos[i].classList.add("texto-tela-clara");
-            textos[i].classList.remove("texto-tela-escura");
-        }
-        let cards = document.querySelectorAll(".card-pokemon");
-        for(let i=0; i<cards.length; i++){
-            cards[i].classList.add("card-tela-clara");
-            cards[i].classList.remove("card-tela-escura");
-        }
-        $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/moon.svg").attr("alt", "Imagem-Lua");
-    }, 500);
-}
-*/
 
 function filtrarCards(divFiltro, primeiraChamada){
     $(".msg-sem-registros").hide();
@@ -211,7 +201,6 @@ function filtrarCards(divFiltro, primeiraChamada){
         atualizarRegistros(primeiraChamada);
 }
 
-
 function atualizarRegistros(primeiraChamada){
     if($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length > 0){   //Se tiver algum registro com todas as classes
         if(!primeiraChamada)
@@ -224,3 +213,40 @@ function atualizarRegistros(primeiraChamada){
         $(".msg-sem-registros").show();
     }
 }
+
+
+/*
+function tela_escura(){
+    setTimeout(function(){
+        $(body).css("background", "#5f6060");
+        let textos = document.querySelectorAll(".texto-tela-clara");
+        for(let i=0; i<textos.length; i++){
+            textos[i].classList.add("texto-tela-escura");
+            textos[i].classList.remove("texto-tela-clara");
+        }
+        let cards = document.querySelectorAll(".card-pokemon");
+        for(let i=0; i<cards.length; i++){
+            cards[i].classList.add("card-tela-escura");
+            cards[i].classList.remove("card-tela-clara");
+        }
+        $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/sun.svg").attr("alt", "Imagem-Sol");
+    }, 500);
+}
+
+function tela_clara(){
+    setTimeout(function(){
+        $(body).css("background", "#f7ffff");
+        let textos = document.querySelectorAll(".texto-tela-escura");
+        for(let i=0; i<textos.length; i++){
+            textos[i].classList.add("texto-tela-clara");
+            textos[i].classList.remove("texto-tela-escura");
+        }
+        let cards = document.querySelectorAll(".card-pokemon");
+        for(let i=0; i<cards.length; i++){
+            cards[i].classList.add("card-tela-clara");
+            cards[i].classList.remove("card-tela-escura");
+        }
+        $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/moon.svg").attr("alt", "Imagem-Lua");
+    }, 500);
+}
+*/

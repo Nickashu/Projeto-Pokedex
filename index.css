@@ -1,6 +1,11 @@
+@font-face {
+    font-family: "Fonte Pokemon";
+    src: url("font/pokemon-font.ttf") format("truetype");
+}
+
 :root {
     --body: #F2FFF5;
-    --card: #f7fff7;
+    --card: #f4f9f4;
     --filtros: #fcfffb;
 }
 
@@ -27,9 +32,16 @@ body{
     margin-bottom: 4em;
 }
     .titulo-lista-pokemon{
+        font-family: "Fonte Pokemon";
+        font-size: 4em;
+        margin-top: 0;
         grid-column: 1/5;
     }
     .filtro-lista-pokemon{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         grid-column: 1/5;
     }
 .div-registros{
@@ -213,14 +225,62 @@ body{
     align-items: center;
 }
   
-.spinner {
+.spinner, .spinner-filtros {
     border: 8px solid #f3f3f3;
     border-top: 8px solid #3498db;
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
     animation: spin 1s linear infinite;
 }
+.spinner{
+    width: 50px;
+    height: 50px;
+}
+.spinner-filtros{
+    width: 20px;
+    height: 20px;
+    border: 5px solid #a8a8a8;
+    border-top: 5px solid #3498db;
+}
+
+.loading-filtros{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    column-gap: 1em;
+    width: 85vw;
+    height: 8em;
+    font-size: 17pt;
+    border-radius: 15px;
+    opacity: 80%;
+    font-weight: bold;
+}
+
+.div-scroll-top{
+    margin-left: 3em;
+    position: fixed;
+    margin-bottom: 3em;
+    bottom: 0;
+}
+.scroll-top{
+    background-color: #4a4a4a;
+    border-radius: 100%;
+    width: 3em;
+    height: 3em;
+    text-align: center;
+    padding: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.scroll-top:hover{
+    cursor: pointer;
+    transition: 500ms;
+    transform: scale(1.2);
+}
+.scroll-top img{
+    width: 2.3em;
+}
+
 
 /*Animação de rotação para a tela de loading*/
 @keyframes spin {
