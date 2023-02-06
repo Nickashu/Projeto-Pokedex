@@ -103,9 +103,9 @@ async function carregar_pokedex(){
                 console.error('Ocorreu um erro:', error);
             });
 
-            if(num <= limitesGeracoes.gen1+1)
+            if(num <= limitesGeracoes.gen1)
                 $(card_copia).show();
-            if(num == limitesGeracoes.gen2){
+            if(num == limitesGeracoes.gen1){
                 $("#lista-pokemon").show();
                 $(".loading-filtros").show();
                 showLoader(false);  //Fazendo a tela de carregamento desaparecer
