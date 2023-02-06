@@ -35,6 +35,7 @@ body{
         font-family: "Fonte Pokemon";
         font-size: 4em;
         margin-top: 0;
+        margin-bottom: 0;
         grid-column: 1/5;
     }
     .filtro-lista-pokemon{
@@ -256,9 +257,9 @@ body{
 }
 
 .div-scroll-top{
-    margin-left: 3em;
+    margin-left: 2em;
     position: fixed;
-    margin-bottom: 3em;
+    margin-bottom: 2em;
     bottom: 0;
 }
 .scroll-top{
@@ -271,9 +272,11 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 60%;
 }
 .scroll-top:hover{
     cursor: pointer;
+    opacity: 100%;
     transition: 500ms;
     transform: scale(1.2);
 }
