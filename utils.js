@@ -147,7 +147,8 @@ function getGeracaoId(num){
 function alerta(mensagem){
     let copiaAlerta = $(".div-msg-alerta").find(".msg-alerta-principal").clone();
     $(".div-msg-alerta").append(copiaAlerta);
-    $(copiaAlerta).removeClass("msg-alerta-principal").addClass("msg-alerta-copia").text(mensagem).fadeIn(500);
+    $(copiaAlerta).find(".msg").text(mensagem);
+    $(copiaAlerta).removeClass("msg-alerta-principal").addClass("msg-alerta-copia").fadeIn(200);
     setTimeout(function(){
         $(copiaAlerta).fadeOut(200);
         setTimeout(function(){

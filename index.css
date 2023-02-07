@@ -285,26 +285,28 @@ body{
 }
 
 .div-msg-alerta{
-    margin-right: 2em;
-    margin-top: 2em;
     right: 0;
+    margin-right: 1em;
+    margin-top: 1em;
     position: fixed;
-    display: flex;
-    flex-direction: column;
-    row-gap: 2em;
+    z-index: 2;
 }
 .msg-alerta{
+    padding: 0.6em;
     display: flex;
-    justify-content: center;
+    column-gap: 0.3em;
     align-items: center;
+    justify-content: center;
     text-align: center;
     font-weight: bold;
     font-size: 0.9em;
-    width: 17em;
-    height: 7em;
+    max-height: 6em;
     border-radius: 15px;
+    background-color: rgb(100 235 111 / 70%);
     box-shadow: 0px 2px 5px #938a8a;
-    background-color: rgb(15 151 26 / 50%);
+}
+.msg-alerta img{
+    width: 1.5em;
 }
 
 
@@ -313,7 +315,6 @@ body{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
 
 /*Responsividade*/
 @media screen and (max-width: 1460px) {
@@ -373,8 +374,21 @@ body{
         transform: translate(50%, 0);
         margin-right: 0;
     }
+    .div-msg-alerta{
+        width: 90%;
+        margin-right: 0;
+        right: 50%;
+        transform: translate(50%, 0);
+        margin-top: 1em;
+        position: fixed;
+    }
     .msg-alerta{
+        padding: 0;
         background-color: rgb(100 235 111 / 90%);
+        font-size: 0.8em;
+    }
+    .msg-alerta img{
+        width: 1.3em;
     }
 }
 @media screen and (max-width: 350px) {
