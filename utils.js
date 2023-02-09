@@ -1,3 +1,13 @@
+const comecoGeracoes = {
+    gen1: 1,
+    gen2: 152,
+    gen3: 252,
+    gen4: 387,
+    gen5: 495,
+    gen6: 650,
+    gen7: 722
+};
+
 const limitesGeracoes = {
     gen1: 151,
     gen2: 251,
@@ -7,7 +17,6 @@ const limitesGeracoes = {
     gen6: 721,
     gen7: 810
 };
-
 
 function capitalize(string){
     let string_format="";

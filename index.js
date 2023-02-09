@@ -1,15 +1,3 @@
-/*
-let flag = true;
-let btn_cor = window.document.querySelector(".btn-cor");
-btn_cor.addEventListener("click", function(){
-    if(flag)
-        tela_escura();
-    else
-        tela_clara();
-    flag = !flag;
-});
-*/
-
 //Evento de voltar ao topo da tela:
 $(document).on("scroll", function(){
     let scrollTop = document.scrollingElement.scrollTop;
@@ -34,24 +22,24 @@ $(document).on("click", ".img-pokemon", function(){
 });
 
 $(document).on("change", ".filtro-geracao input, .filtro-tipos input", function(){    //Evento do filtro
-    filtrarCards($(this).closest("div"), false);
+    filtrarCards($(this));
 });
 $(document).on("keyup", "#input-pokemon", function(){    //Evento do filtro
-    filtrarCards($(this).closest("div"), false);
+    filtrarCards($(this));
 });
 
 
 window.onload = function(){
-    carregar_pokedex();
+    carregarCards(comecoGeracoes.gen1, limitesGeracoes.gen1, true);   //Inicialmente, carregando apenas a primeira geração
 }
 
-async function carregar_pokedex(){
+async function carregarCards(comeco, final, isChamadaInicial){
+    showLoader(true);  //Fazendo a tela de carregamento aparecer
     let url = "";
     let card_original = $("#card-pokemon-principal");
-    let div_lista = $("#lista-pokemon");
+    let div_lista = $("#lista-pokemon")
 
-    showLoader(true);  //Fazendo a tela de carregamento aparecer
-    for(let num=1; num<limitesGeracoes.gen7; num++){
+    for(let num=comeco; num<=final; num++){
         url = "https://pokeapi.co/api/v2/pokemon/" + num;
         let chamadaPrincipal = await fetch(url)    //Fazendo as chamadas de forma síncrona
         .then(response => {
@@ -75,8 +63,22 @@ async function carregar_pokedex(){
             $(card_copia).find(".detalhes-pokemon .conteudo-tipo").html(tiposHTML);
             //Adicionando os atributos necessário para os filtros:
             let geracao = getGeracaoId(num);
-            $(card_copia).attr("nome", data.name).attr("num", data.id).attr("tipos", tiposTxt.trim()).attr("gen", geracao);
-            $(div_lista).append(card_copia);
+            $(card_copia).attr("nome", data.name).attr("num", data.id).attr("tipos", tiposTxt.trim()).attr("gen", "gen" + geracao);
+            if(geracao != 1){
+                let pontoDePartida = 1;
+                for(let i=geracao-1; i>=0; i--){
+                    if($(".card-pokemon[gen='gen" + i +"']").length > 0){
+                        pontoDePartida = i;
+                        break;
+                    }
+                }
+                if(num == comeco)
+                    $(div_lista).find(".card-pokemon[gen='gen" + pontoDePartida +"']:last").after(card_copia);
+                else
+                    $(div_lista).find(".card-pokemon[gen='gen" + geracao +"']:last").after(card_copia);
+            }
+            else
+                $(div_lista).append(card_copia);
             //Pegando a entrada da pokedex:
             let url_specie = "https://pokeapi.co/api/v2/pokemon-species/" + num;
             fetch(url_specie)    //Fazendo as chamadas de forma síncrona
@@ -101,151 +103,128 @@ async function carregar_pokedex(){
                 console.error('Ocorreu um erro:', error);
             });
 
-            if(num <= limitesGeracoes.gen1)
-                $(card_copia).show();
-            if(num == limitesGeracoes.gen1){
-                $("#lista-pokemon").show();
-                $(".loading-filtros").show();
-                showLoader(false);  //Fazendo a tela de carregamento desaparecer
+            if(isChamadaInicial){
+                if(num <= limitesGeracoes.gen1)
+                    $(card_copia).show();
+                if(num == 20){
+                    $("#lista-pokemon").show();
+                    $(".loading-filtros").show();
+                    atualizarRegistros(true);
+                    showLoader(false);  //Fazendo a tela de carregamento desaparecer
+                }
             }
         })
         .catch(error => {
             console.error('Ocorreu um erro:', error);
         });
     }
+
     //Ao final de todo o carregamento:
-    filtrarCards($(".filtro-geracao"), true);
-    filtrarCards($(".filtro-tipos"), true);
-    filtrarCards($(".filtro-nome-numero"), true);
-    $(".loading-filtros").remove();
-    alerta("Filtros carregados com sucesso");
-    $(".div-filtros").fadeIn(500);
+    if(isChamadaInicial){
+        $(".loading-filtros").remove();
+        alerta("Filtros carregados com sucesso");
+        $(".div-filtros").fadeIn(500);
+    }
+    else
+        showLoader(false);
 }
 
-function filtrarCards(divFiltro, primeiraChamada){
-    $(".msg-sem-registros").hide();
-    const div_filtro = $(".filtro-lista-pokemon");
-    if($(divFiltro).hasClass("filtro-geracao")){
-        let listaGeracoes = [];
-        $(div_filtro).find(".filtro-geracao").find("input").each(function(index, element){
-            if($(element).prop("checked"))
-                listaGeracoes.push($(element).attr("value"));
-        });
+async function filtrarCards(elementoFiltro){
+    const div_filtro_geral = $(".filtro-lista-pokemon");
+    const divFiltro = $(elementoFiltro).closest("div");
+    let novaGen = false;
+    if($(divFiltro).hasClass("filtro-geracao")){   //Se for o filtro de geração:
+        let marcando = $(elementoFiltro).prop("checked");
+        if(marcando){
+            if($(".card-pokemon[gen='gen" + $(elementoFiltro).attr("value") + "']").length == 0){  //Se não existirem cards de pokemon desta geração
+                await carregarCards(comecoGeracoes["gen" + $(elementoFiltro).attr("value")], limitesGeracoes["gen" + $(elementoFiltro).attr("value")], false);
+                novaGen = true;
+            }
+        }
+    }
 
-        $(".card-pokemon").each(function(index, element){
-            if(listaGeracoes.includes($(element).attr("gen"))){
-                $(element).addClass("filtro-gen");
-                if($(element).hasClass("filtro-nome-numero") && $(element).hasClass("filtro-tipo"))
-                    $(element).fadeIn(300);
+    let listaGeracoes = [];
+    $(div_filtro_geral).find(".filtro-geracao").find("input").each(function(index, element){
+        if($(element).prop("checked"))
+            listaGeracoes.push("gen" + $(element).attr("value"));
+    });
+
+    let listaTiposDesmarcados = [];
+    $(div_filtro_geral).find(".filtro-tipos").find("input").each(function(index, element){
+        if(!$(element).prop("checked"))
+        listaTiposDesmarcados.push($(element).attr("value"));
+    });
+
+    let textoInput = $("#input-pokemon").val().toLowerCase().trim();
+    if($("#input-pokemon").val() === "")
+        $(".div-icon-lupa").show();
+    else
+        $(".div-icon-lupa").hide();
+
+    $(".card-pokemon").each(function(index, element){
+        //Filtro geração:
+        if(listaGeracoes.includes($(element).attr("gen"))){
+            $(element).addClass("filtro-gen");
+            if($(element).hasClass("filtro-nome-numero") && $(element).hasClass("filtro-tipo"))
+                $(element).fadeIn(300);
+        }
+        else
+            $(element).removeClass("filtro-gen").fadeOut(300);
+
+        //Filtro tipo:
+        if($(element).attr("tipos")){   //Se o card possuir o atributo "tipos"
+            let tipos = $(element).attr("tipos").split(" ");
+            let temTipoDesmarcado = false;
+            for(let i=0; i<tipos.length; i++){
+                if(listaTiposDesmarcados.includes(tipos[i])){
+                    temTipoDesmarcado = true;
+                    break;
+                }
+            }
+            if(temTipoDesmarcado){
+                $(element).removeClass("filtro-tipo").fadeOut(300);
             }
             else{
-                $(element).removeClass("filtro-gen").fadeOut(300);
+                $(element).addClass("filtro-tipo");
+                if($(element).hasClass("filtro-nome-numero") && $(element).hasClass("filtro-gen"))
+                    $(element).fadeIn(300);
             }
-        });
-    }
+        }
 
-    else if($(divFiltro).hasClass("filtro-tipos")){
-        let listaTiposDesmarcados = [];
-        $(div_filtro).find(".filtro-tipos").find("input").each(function(index, element){
-            if(!$(element).prop("checked"))
-            listaTiposDesmarcados.push($(element).attr("value"));
-        });
-
-        $(".card-pokemon").each(function(index, element){
-            if($(element).attr("tipos")){   //Se o card possuir o atributo "tipos"
-                let tipos = $(element).attr("tipos").split(" ");
-                let temTipoDesmarcado = false;
-                for(let i=0; i<tipos.length; i++){
-                    if(listaTiposDesmarcados.includes(tipos[i])){
-                        temTipoDesmarcado = true;
-                        break;
-                    }
-                }
-                if(temTipoDesmarcado){
-                    $(element).removeClass("filtro-tipo").fadeOut(300);
-                }
-                else{
-                    $(element).addClass("filtro-tipo");
-                    if($(element).hasClass("filtro-nome-numero") && $(element).hasClass("filtro-gen"))
-                        $(element).fadeIn(300);
-                }
+        //Filtro nome/número:
+        if($(element).attr("nome") || $(element).attr("num")){   //Se o card possuir o atributo "nome" ou o atributo "num"
+            if($(element).attr("nome").includes(textoInput) || $(element).attr("num").includes(textoInput)){
+                $(element).addClass("filtro-nome-numero");
+                if($(element).hasClass("filtro-tipo") && $(element).hasClass("filtro-gen"))
+                    $(element).show();
             }
-        });
-    }
-    else if($(divFiltro).hasClass("filtro-nome-numero")){
-        let textoInput = $("#input-pokemon").val().toLowerCase().trim();
-        if($("#input-pokemon").val() === "")
-            $(".div-icon-lupa").show();
-        else
-            $(".div-icon-lupa").hide();
-
-        $(".card-pokemon").each(function(index, element){
-            if($(element).attr("nome") || $(element).attr("num")){   //Se o card possuir o atributo "nome" ou o atributo "num"
-                if($(element).attr("nome").includes(textoInput) || $(element).attr("num").includes(textoInput)){
-                    $(element).addClass("filtro-nome-numero");
-                    if($(element).hasClass("filtro-tipo") && $(element).hasClass("filtro-gen"))
-                        $(element).show();
-                }
-                else {
-                    $(element).removeClass("filtro-nome-numero").hide();
-                }
+            else {
+                $(element).removeClass("filtro-nome-numero").hide();
             }
-        });
+        }
+    });
 
-        if(primeiraChamada)
-            atualizarRegistros(primeiraChamada);
-    }
+    if(novaGen)
+        alerta("Registros carregados com sucesso");
 
-    if(!primeiraChamada)
-        atualizarRegistros(primeiraChamada);
+    atualizarRegistros(false);
 }
 
 function atualizarRegistros(primeiraChamada){
-    if($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length > 0){   //Se tiver algum registro com todas as classes
-        if(!primeiraChamada)
-            $(".div-registros .registros").fadeOut(200).fadeIn(200);
-        $(".div-registros .registros").text($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length);
+    $(".msg-sem-registros").hide();
+    if(primeiraChamada){
+        $(".div-registros .registros").text(limitesGeracoes.gen1);
         $(".div-registros").show();
     }
     else{
-        $(".div-registros").hide();
-        $(".msg-sem-registros").show();
+        if($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length > 0){   //Se tiver algum registro com todas as classes
+            $(".div-registros .registros").fadeOut(200).fadeIn(200);
+            $(".div-registros .registros").text($(".card-pokemon.filtro-tipo.filtro-gen.filtro-nome-numero").length);
+            $(".div-registros").show();
+        }
+        else{
+            $(".div-registros").hide();
+            $(".msg-sem-registros").show();
+        }
     }
 }
-
-
-/*
-function tela_escura(){
-    setTimeout(function(){
-        $(body).css("background", "#5f6060");
-        let textos = document.querySelectorAll(".texto-tela-clara");
-        for(let i=0; i<textos.length; i++){
-            textos[i].classList.add("texto-tela-escura");
-            textos[i].classList.remove("texto-tela-clara");
-        }
-        let cards = document.querySelectorAll(".card-pokemon");
-        for(let i=0; i<cards.length; i++){
-            cards[i].classList.add("card-tela-escura");
-            cards[i].classList.remove("card-tela-clara");
-        }
-        $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/sun.svg").attr("alt", "Imagem-Sol");
-    }, 500);
-}
-
-function tela_clara(){
-    setTimeout(function(){
-        $(body).css("background", "#f7ffff");
-        let textos = document.querySelectorAll(".texto-tela-escura");
-        for(let i=0; i<textos.length; i++){
-            textos[i].classList.add("texto-tela-clara");
-            textos[i].classList.remove("texto-tela-escura");
-        }
-        let cards = document.querySelectorAll(".card-pokemon");
-        for(let i=0; i<cards.length; i++){
-            cards[i].classList.add("card-tela-clara");
-            cards[i].classList.remove("card-tela-escura");
-        }
-        $(".btn-cor").find(".img-sol-lua").attr("src", "imgs/moon.svg").attr("alt", "Imagem-Lua");
-    }, 500);
-}
-*/
