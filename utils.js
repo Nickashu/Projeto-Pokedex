@@ -126,10 +126,14 @@ function descricaoValida(desc){
 }
 
 function showLoader(ativo){
-    if(ativo)
+    if(ativo){
         $("#loader").show();
-    else
+        $("body").css("overflow", "hidden");
+    }
+    else{
         $("#loader").hide();
+        $("body").css("overflow", "auto");
+    }
 }
 
 function getGeracaoId(num){
